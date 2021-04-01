@@ -1,10 +1,18 @@
+
 import React from 'react'
 import {Get} from 'react-axios'
-import { Table } from 'react-bootstrap';
+import { Table ,Button} from 'react-bootstrap';
 export default function Books() {
 
 
     return (
+      <div>
+      <h1>Books</h1>
+      <Button className={"addbookbtn"}>Add book</Button>
+      {
+      //Get component request
+      
+}
         <Get url="http://127.0.0.1:5000/getbooks">
         {(error, response, isLoading, makeRequest, axios) => {
           if(error) {
@@ -15,7 +23,6 @@ export default function Books() {
           }
           else if(response !== null) {
             console.log(response.data.thelist)
-            //{response.data.message}response.data.thelist.map(e => {})
             return (<div>
               <Table striped bordered hover>
                 <thead>
@@ -28,6 +35,7 @@ export default function Books() {
                   </tr>
                 </thead>
                 {
+                  //Table rendering 
                   response.data.thelist.map(e => {
                     return <tr>
                     <td>{e.id}</td>
@@ -35,6 +43,11 @@ export default function Books() {
                     <td>{e.authors}</td>
                     <td>{e.stock}</td>
                     <td>{e.isbn}</td>
+                    <td>
+                      <Button>Delete</Button>
+                      {" "}
+                      <Button>Edit</Button>
+                    </td>
                   </tr>
                   })
                 }
@@ -44,5 +57,6 @@ export default function Books() {
           return (<div>Default message before request is made.</div>)
         }}
       </Get>
+      </div>
     )
 }

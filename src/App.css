@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+.addbookbtn{
+  float: left;
+  margin-bottom: 1vh;
+}
