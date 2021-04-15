@@ -1,10 +1,8 @@
 
 import React , {useState}from 'react'
 import {Button} from 'react-bootstrap';
-import GetBooksCom from './api/GetBooksCom';
+import GetBooksCom from './api/books/GetBooksCom';
 import AddBook from './models/AddBook';
-
-
 export default function Books() {
   //Get all books
   const GetBooksApi = GetBooksCom

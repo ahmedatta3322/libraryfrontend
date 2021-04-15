@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, FormControl, InputGroup , Form } from "react-bootstrap";
-import AddBookCom from "../api/AddBookCom";
+import AddBookCom from "../api/books/AddBookCom";
 //Request model and form 
 export default function AddBook(props) {
   const [show, setShow] = useState(props.show(true, "setShow"));
@@ -22,7 +22,13 @@ export default function AddBook(props) {
             response.then(e => {
               if(e.status === 200){
                 handleClose()
-            }})
+            }
+            else {
+              return alert("Error happend , please try again later")
+            }
+          }).catch(error => {
+              console.log(error)
+            })
           }}>
           <InputGroup className="mb-3">
             <FormControl required placeholder="Book Title" name="title" onChange={handleChangeData}/>

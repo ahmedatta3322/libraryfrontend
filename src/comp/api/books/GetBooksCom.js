@@ -1,6 +1,11 @@
 import React from 'react'
 import { Table ,Button} from 'react-bootstrap';
 import {Get } from 'react-axios'
+import DeleteBookCom from './DeleteBookCom';
+const handleDelete = (id) => {
+  DeleteBookCom(id)
+  window.location.reload()
+} 
 export default function GetBooksCom() {
   return <Get url="http://127.0.0.1:5000/getbooks">
   {(error, response, isLoading, makeRequest, axios) => {
@@ -11,7 +16,6 @@ export default function GetBooksCom() {
       return (<div>Loading...</div>)
     }
     else if(response !== null) {
-      console.log(response.data.thelist)
       return (<div>
         <Table striped bordered hover>
           <thead>
@@ -34,7 +38,7 @@ export default function GetBooksCom() {
               <td>{e.stock}</td>
               <td>{e.isbn}</td>
               <td>
-                <Button>Delete</Button>
+                <Button onClick={() => handleDelete(e.id)}>Delete</Button>
                 {" "}
                 <Button>Edit</Button>
               </td>
