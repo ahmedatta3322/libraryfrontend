@@ -1,6 +1,6 @@
 
 import React , {useState}from 'react'
-import { Table ,Button} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import GetBooksCom from './api/GetBooksCom';
 import AddBook from './models/AddBook';
 
@@ -12,7 +12,7 @@ export default function Books() {
   const [comp, setComp] = useState(GetBooksApi); 
   //Handling the model showing and closing
   const handleAddCallback = (e,y) => {
-   if (y == "handleClose"){
+   if (y === "handleClose"){
       e = false
       setComp(GetBooksApi)
     }

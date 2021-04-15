@@ -1,10 +1,14 @@
-import React,{useState } from 'react'
-import { Modal ,Button,FormControl,InputGroup} from 'react-bootstrap';
-import AddBookCom from '../api/AddBookCom';
+import React, { useState } from "react";
+import { Modal, Button, FormControl, InputGroup , Form } from "react-bootstrap";
+import AddBookCom from "../api/AddBookCom";
+//Request model and form 
 export default function AddBook(props) {
-  const [show, setShow] = useState(props.show(true,"setShow"));
+  const [show, setShow] = useState(props.show(true, "setShow"));
+  const [data, setData] = useState({});
   const handleClose = () => setShow(props.show(false, "handleClose"));
-  const [data,setData] = useState([])
+  const handleChangeData = (target) => {
+    setData({...data,[target.target["name"]]:target.target["value"]})
+  }
   return (
     <>
       <Modal show={show} onHide={handleClose}>
@@ -12,42 +16,35 @@ export default function AddBook(props) {
           <Modal.Title>Add Book</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <InputGroup className="mb-3">
-    
-    <FormControl
-      placeholder="Book Title"
-      title="title"
-    />
-    </InputGroup>
-    <InputGroup className="mb-3">
-    <FormControl
-      placeholder="Author"
-      name="author"
-    />
-    </InputGroup>
-    <InputGroup className="mb-3">
-    <FormControl
-      placeholder="ISBN"
-      name="isbn"
-    
-    />
-    </InputGroup>
-    <InputGroup className="mb-3">
-    <FormControl
-      placeholder="Stock"
-      name="stock"
-      type="number"
-    />
-    </InputGroup>
-        </Modal.Body>
-        <Modal.Footer>
+          <Form onSubmit={(e)=>{
+            e.preventDefault()
+            let response = AddBookCom(data)
+            response.then(e => {
+              if(e.status === 200){
+                handleClose()
+            }})
+          }}>
+          <InputGroup className="mb-3">
+            <FormControl required placeholder="Book Title" name="title" onChange={handleChangeData}/>
+          </InputGroup>
+          <InputGroup className="mb-3">
+            <FormControl required placeholder="Author" name="authors" onChange={handleChangeData}/>
+          </InputGroup>
+          <InputGroup className="mb-3">
+            <FormControl required placeholder="ISBN" name="isbn" onChange={handleChangeData}/>
+          </InputGroup>
+          <InputGroup className="mb-3">
+            <FormControl required placeholder="Stock" name="stock" type="number" onChange={handleChangeData}/>
+          </InputGroup>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={AddBookCom}>
+          {" "}
+          <Button type="submit" variant="primary" >
             Save Changes
           </Button>
-        </Modal.Footer>
+          </Form>
+        </Modal.Body>
       </Modal>
     </>
   );
